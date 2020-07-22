@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+      <meta name="referrer" content="never" />
+      <link rel="icon" type="x-icon" href="favicon.ico" />
+      <!-- STYLESHEETS -->
+      <link href="css/site-interface.css" rel="stylesheet" type="text/css" />
+      <!-- SCRIPTS -->
+      <!--  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+      <script src="lib/live2d.min.js" type="text/javascript"></script>
+      <script src="lib/netUtils.js" type="text/javascript"></script>
+      <script src="lib/Live2DFramework.js" type="text/javascript"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.8/pixi.min.js" type="text/javascript"></script>
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.0.4/pixi.min.js"></script> -->
+      <script src="lib/glMatrix-common.js" type="text/javascript"></script>
+      <script src="lib/glMatrix-mat4.js" type="text/javascript"></script>
+      <script src="lib/MatrixStack.js" type="text/javascript"></script>
+      <script src="lib/ModelSettingJson.js" type="text/javascript"></script>
+      <script src="lib/LAppModel.js" type="text/javascript"></script>
+      <script src="lib/index.js" type="text/javascript"></script>
+		
+		
+	     <script>
+		 var url = window.location.href + "/assets/";
+		 var live2d = "Live2D Textures/";
+		 var yumeiro = url + live2d + "Yumeiro Company/";
+		 var genesis = url + live2d + "GENESIS/";
+		 
+		 
+         var imageSrcs = [];
+         imageSrcs.push(url+"image/drama_bg_01.jpg");
+		 
+         var images = [];
+         
+         preloadImages(imageSrcs, images, loadModels);
+         
+         function preloadImages(srcs, imgs, callback) {
+             var img;
+             var remaining = srcs.length;
+             for (var i = 0; i < srcs.length; i++) {
+                 img = new Image();
+                 img.onload = function() {
+                     --remaining;
+                     if (remaining <= 0) {
+                         callback();
+                     }
+                 };
+                 img.src = srcs[i];
+                 imgs.push(img);
+             }
+         }
+         
+         function loadModels() {
+           console.log("Images loaded");
+         }
+      </script>
+		
+		
+      <title>Yumeiro Cast Live2D Viewer</title>
+         <style>
+		 body { 
+         font-family:sans-serif;
+         font-size:11px;
+         margin: 0; 
+         width:100%;
+         color:#39597a}
+		 #page{
+         width:100%;
+         min-width:818px;
+         max-width:1278px;
+         margin: auto;
+         margin-top:35px;
+         }
+		 #page h1{
+		 font-size:18px;
+		 }
+         #main{
+		 display:inline-block;
+         margin:auto;
+         width:1200px;
+         height:676px;
+         background-repeat: no-repeat;
+         background-size: cover;
+         position: relative;
+         }
+         @media only screen and (max-width: 1200px) {	
+         #main{
+         width:900px;
+         height: 507px;
+         }
+         }
+         @media only screen and (max-width: 817px) {	
+         #main{
+         width:768px;
+         height:432px;
+         }
+         }
+         #capture{
+         width:auto;
+         height:auto;
+         }
+		 .selection{
+		 width:200px;
+		 height:auto;
+		 }
+		 .left{
+		 float:left;
+		 }
+		 .right{
+		 float:right;
+		 }
+		 </style>
+   </head>
+   <body>
+ <div id="page">
+ <center><h1>Yumeiro Cast Live2D Viewer</h1></center>
+ <div id="capture">
+ <div id="main" style="background-image: url(assets/image/drama_bg_01.jpg);">
+ <div id="ui">
+                  <div id="charSpace1" class="charBox">
+                  <!--   <div style="right:0;" id="close_charBox1" class="char_close">&times;</div>-->
+  
+                        <div id="select_char1" class="selection left">
+								<select class="company companyA">
+								<option value="" selected disabled hidden> Select Company</option>
+								<option value="Yumeiro Company">Yumeiro Company</option>
+								<option value="GENESIS">GENESIS</option>
+								</select>
+								<p>
+								<strong>Select Character:</strong>&nbsp;
+								<select class="char_select charA">
+								<option value="" selected disabled hidden> Select Character A</option>
+								</select>
+								</p>
+						<!--		<select class="char_select yume_char charA">
+								<option value="" selected disabled hidden> Select Character A</option>
+								<option value="subaru">Subaru</option>
+								<option value="sousei">Sousei</option>
+								<option value="kyoya">Kyoya</option>
+								<option value="kaito">Kaito</option>
+								<option value="jin">Jin</option>
+								<option value="iori">Iori</option>
+								<option value="hinata">Hinata</option>
+								</select>
+
+								<select class="char_select genesis_char charA">
+								<option value="" selected disabled hidden> Select Character A</option>
+								<option value="yutaro">Yutaro</option>
+								<option value="ryosuke">Ryosuke</option>
+								<option value="rei">Rei</option>
+								<option value="gaku">Gaku</option>
+								<option value="takuma">Takuma</option>
+								</select>-->
+								<p>
+								<strong>Select Outfit:</strong>&nbsp;
+								<select class="outfit outfitA">
+								<option value="" selected disabled hidden> Select Outfit</option>
+								</select>
+								</p>
+								</div>
+
+				 <p><button id="modela" class="first">Add Character A</button></p>
+                     <div id="function">
+                        <p><strong>Character: </strong><span id="active_charA"></span></p>
+                        <div id="g1">
+						<p>
+						<strong>Character A Expression:&nbsp;</strong>
+						   <select class="exp">
+                              <option value="" selected disabled hidden>Select Expression</option>
+                           </select>
+							</p><p>
+                           <strong>Character A Motion:&nbsp;</strong>
+						   
+                           <select class="motion">
+                              <option value="" selected disabled hidden>Select Motion</option>
+                           </select>
+						      
+						  
+                           <button class="motion">Replay</button></p>
+                        </div>
+                     </div>
+                  </div>
+				  
+				  <div id="charSpace2" class="charBox" style="pointer-events:none;">
+                   <!--  <div style="right:0;" id="close_charBox2" class="char_close">&times;</div>-->
+
+                         <div id="select_char2" class="selection left">
+								<select class="company companyB">
+								<option value="" selected disabled hidden> Select Company</option>
+								<option value="Yumeiro Company">Yumeiro Company</option>
+								<option value="GENESIS">GENESIS</option>
+								</select>
+								<p>
+								<strong>Select Character:</strong>&nbsp;
+								<select class="char_select charB">
+								<option value="" selected disabled hidden> Select Character B</option>
+								</select>
+								</p>
+								<!--<select class="char_select yume_char charB">
+								<option value="" selected disabled hidden> Select Character B</option>
+								<option value="subaru">Subaru</option>
+								<option value="sousei">Sousei</option>
+								<option value="kyoya">Kyoya</option>
+								<option value="kaito">Kaito</option>
+								<option value="jin">Jin</option>
+								<option value="iori">Iori</option>
+								<option value="hinata">Hinata</option>
+								</select>
+
+								<select class="char_select genesis_char charB">
+								<option value="" selected disabled hidden> Select Character B</option>
+								<option value="yutaro">Yutaro</option>
+								<option value="ryosuke">Ryosuke</option>
+								<option value="rei">Rei</option>
+								<option value="gaku">Gaku</option>
+								<option value="takuma">Takuma</option>
+								</select>-->
+								<p>
+								<strong>Select Outfit:</strong>&nbsp;
+								<select class="outfit outfitB"><option value="" selected disabled hidden> Select Outfit</option></select>
+								</p>
+								</div>
+
+                     <p><button id="modelb" class="first" disabled>Add Character B</button>
+                        <button id="removeb" style="display:none;" class="third">Remove Character B</button>
+                     </p>
+                     <div id="function2">
+                        <p><strong>Character: </strong><span id="active_charB"></span></p>
+                        <div id="g2">
+						<p>
+						<strong>Character B Expression:&nbsp;</strong>
+						<select class="exp">
+                              <option value="" selected disabled hidden>Select Expression</option>
+                           </select>
+						   </p>
+						   <p>
+                           <strong>Character B Motion:&nbsp;</strong>
+                           <select class="motion">
+                              <option value="" selected disabled hidden>Select Motion</option>
+                           </select>
+                           <button class="motion">Replay</button></p>
+                        </div>
+                     </div>
+                  </div>
+				  
+				  
+
+   
+
+</div>
+            <div id ="model_display">
+                  <div class="canvasClass">
+                     <canvas id="canvas" width="450">
+                     </canvas>
+                  </div>
+               </div>
+</div>
+</div>
+        <div id="fun_stuff" style="margin-left:35px; margin-top:15px;width:94%;text-align:center;">
+            <!--<button id="dlModels">Download Models</button>&nbsp;<button id="openModal" disabled>Add Dialogue</button>&nbsp;<button id="resetText" disabled>Restart Dialogue</button>
+			&nbsp;<button id="toggleTextbox" disabled>Toggle Textbox</button>-->
+			&nbsp;<button id="hide_ui">Toggle UI</button>&nbsp;<button class="captureB" id="capture_transparent" onclick="capture()" disabled>Capture Renders</button>
+			
+			           <label>
+                        &nbsp;<button id="changeBG">Change Background</button>
+                        <input id="file-input" type="file"  accept="image/*" onchange="readURL(this)" hidden/>
+                     </label>
+			
+			
+			
+			<!-- &nbsp;<button class="downloadJson" id="downloadJsonScript" onclick="exportText()" disabled>Export Dialogue</button>-->
+            <div style="float: right;">Coded by <a target="_blank" href="https://twitter.com/gradualcolours">@gradualcolours</a></div>
+         </div>
+</div>
+      <script src="js/live2d.js" type="text/javascript"></script>
+      <script src="js/main.js" type="text/javascript"></script>
+</body>
+</html>

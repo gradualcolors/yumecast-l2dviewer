@@ -1,0 +1,15 @@
+{
+	"type":"Live2D Pose",
+	"parts_visible":[
+		{
+			"group":[
+				{"id":"PARTS_01_NECK4"}
+			]
+		},
+		{
+			"group":[
+				{"id":"PARTS_04_BODY"}
+			]
+		}
+	]
+}

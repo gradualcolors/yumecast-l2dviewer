@@ -1,0 +1,47 @@
+{
+	"type":"Live2D Physics",
+	"physics_hair":[
+		{
+			"label":"hair_front",
+			"setup":{
+				"length":0.17,
+				"regist":1.5,
+				"mass":1
+			},
+			"src":[
+				{
+					"id":"PARAM_ANGLE_X",
+					"ptype":"x",
+					"scale":0.01,
+					"weight":0.1
+				},
+				{
+					"id":"PARAM_BODY_ANGLE_Z",
+					"ptype":"x",
+					"scale":0.01,
+					"weight":0.3
+				},
+				{
+					"id":"PARAM_ANGLE_Z",
+					"ptype":"x",
+					"scale":0.01,
+					"weight":0.1
+				},
+				{
+					"id":"PARAM_BODY_ANGLE_X",
+					"ptype":"x",
+					"scale":0.01,
+					"weight":0.1
+				}
+			],
+			"targets":[
+				{
+					"id":"PARAM_HAIR_FRONT",
+					"ptype":"angle",
+					"scale":0.025,
+					"weight":1
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"type":"Live2D Pose",
+	"parts_visible":[
+		{
+			"group":[
+				{"id":"PARTS_04_BODY"}
+			]
+		}
+	]
+}
