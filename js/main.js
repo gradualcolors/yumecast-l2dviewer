@@ -173,7 +173,7 @@ $("span#active_charA").html(charName1);
 			
 						
 			
-			var charURL = "/assets/Live2D Textures/" +  $("select.companyA").val() + "/" + $("select.charA").val() + "/" + $("select.charA").val() + outfit + "/";
+			var charURL = "assets/Live2D Textures/" +  $("select.companyA").val() + "/" + $("select.charA").val() + "/" + $("select.charA").val() + outfit + "/";
 			
 			    show(charURL, "model.json", function(model)
 				{
@@ -238,7 +238,7 @@ $("button#modelb").click( function() {
 				break;
 			}
 		
-			var charURL2 = "/assets/Live2D Textures/" +  $("select.companyB").val() + "/" + $("select.charB").val() + "/" + $("select.charB").val() + outfit + "/";
+			var charURL2 = "assets/Live2D Textures/" +  $("select.companyB").val() + "/" + $("select.charB").val() + "/" + $("select.charB").val() + outfit + "/";
 		
 			if(stage.children.length > 1)
 			{			
